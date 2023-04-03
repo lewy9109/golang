@@ -1,8 +1,9 @@
 package main
 
 import (
-	"edu/model/user"
+	// "edu/model/user"
 	"fmt"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"log"
 )
@@ -22,10 +23,32 @@ func main() {
 		log.Fatal(err)
 	}
 
+	infraUser := user.DefaultUserInfraStructure(db)
+
+	user := addUser()
+
+	err = infraUser.CreateUser(user)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	// var id uint
 	// id = 1
 
 	// user, _ := user.UserInfrastructure.GetUser(id)
 
 	// fmt.Println(user)
+}
+
+func addUser() user.User {
+
+	newUser := user.User{
+		FirstName: "Xavi",
+		LastName:  "Fernando",
+		Email:     "mail@glob.com",
+		Password:  "qwerty123",
+	}
+
+	return newUser
 }
