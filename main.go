@@ -1,7 +1,7 @@
 package main
 
 import (
-	// "edu/model/user"
+	"edu/model/user"
 	"fmt"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
