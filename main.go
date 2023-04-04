@@ -26,20 +26,32 @@ func main() {
 
 	infraUser := user.DefaultUserInfraStructure(db)
 
-	user := addUser()
-
-	err = infraUser.CreateUser(user)
+	user, err := infraUser.GetByEmail("mail@glob.com")
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// var id uint
-	// id = 1
+	fmt.Println(user)
 
-	// user, _ := user.UserInfrastructure.GetUser(id)
+	err = infraUser.UpdateUserAccessToken(user.ID, "123qwerty")
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	// fmt.Println(user)
+	user, err = infraUser.GetByEmail("mail@glob.com")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(user)
+	// user := addUser()
+	// err = infraUser.CreateUser(user)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
 }
 
 func addUser() user.User {

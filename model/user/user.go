@@ -1,11 +1,11 @@
 package user
 
 import (
-// "gorm.io/gorm"
+	"gorm.io/gorm"
 )
 
 type User struct {
-	// gorm.Model
+	gorm.Model
 	FirstName   string `gorm:"first_name"`
 	LastName    string `gorm:"last_name"`
 	Email       string `gorm:"email"`

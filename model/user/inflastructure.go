@@ -10,6 +10,7 @@ type UserInfrastructure interface {
 	GetUser(id uint) (*User, error)
 	GetByEmail(email string) (*User, error)
 	GetByToken(accessToken string) (*User, error)
+	UpdateUserAccessToken(id uint, access_token string) error
 }
 
 type userInfra struct {
@@ -76,4 +77,17 @@ func (u *userInfra) GetByToken(accessToken string) (*User, error) {
 
 	}
 	return &user, nil
+}
+
+func (u *userInfra) UpdateUserAccessToken(id uint, access_token string) error {
+
+	result := u.db.Model(&User{}).Where("id = ?", id).Update("access_token", access_token)
+	if result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return nil
+		}
+		return result.Error
+
+	}
+	return nil
 }
