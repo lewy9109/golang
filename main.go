@@ -25,9 +25,9 @@ func main() {
 
 	infraUser := user.DefaultUserInfraStructure(db)
 	InsertUserToDB(infraUser)
-	UpdateUser(infraUser, uint(1))
-	GetByEmail(infraUser, "mail@glob.com")
-	TokenHelper()
+	// UpdateUser(infraUser, uint(1))
+	// GetByEmail(infraUser, "mail@glob.com")
+	// TokenHelper()
 }
 
 func TokenHelper() {
@@ -51,7 +51,11 @@ func TokenHelper() {
 
 func InsertUserToDB(infraUser user.UserInfrastructure) {
 
-	user, err := infraUser.GetByEmail("mail@glob.com")
+	user := addUser()
+
+	err := infraUser.CreateUser(user)
+
+	// user, err := infraUser.GetByEmail("mail@glob.com")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -75,12 +79,17 @@ func GetByEmail(infraUser user.UserInfrastructure, email string) {
 }
 
 func addUser() user.User {
+	hashedPassword, err := helper.HashPassword("qwerty123")
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	newUser := user.User{
-		FirstName: "Xavi",
+		FirstName: "Test",
 		LastName:  "Fernando",
-		Email:     "mail@glob.com",
-		Password:  "qwerty123",
+		Email:     "mail2@glob.com",
+		Password:  hashedPassword,
 	}
 
 	return newUser
