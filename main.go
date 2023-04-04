@@ -1,8 +1,8 @@
 package main
 
 import (
-	"edu/helpers"
 	"edu/model/user"
+	"edu/seciurity"
 	"fmt"
 
 	"gorm.io/driver/sqlite"
