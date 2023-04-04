@@ -22,24 +22,16 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	infraUser := user.DefaultUserInfraStructure(db)
-	user, err := infraUser.GetByEmail("mail@glob.com")
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(user)
+	InsertUserToDB(infraUser)
+	UpdateUser(infraUser, uint(1))
+	GetByEmail(infraUser, "mail@glob.com")
+	TokenHelper()
+}
 
-	// err = infraUser.UpdateUserAccessToken(user.ID, "123qwerty")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// user, err = infraUser.GetByEmail("mail@glob.com")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// fmt.Println(user)
-
-	token, err := helper.CreateJWTToken(uint(user.ID), "secretToken")
+func TokenHelper() {
+	token, err := helper.CreateJWTToken(uint(1), "secretToken")
 	if err != nil {
 		fmt.Println("KUPA")
 		log.Fatal(err)
@@ -55,7 +47,31 @@ func main() {
 	parsedUser := parsedToken.Claims.(jwt.MapClaims)
 
 	fmt.Println(parsedUser)
+}
 
+func InsertUserToDB(infraUser user.UserInfrastructure) {
+
+	user, err := infraUser.GetByEmail("mail@glob.com")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(user)
+
+}
+
+func UpdateUser(infraUser user.UserInfrastructure, userID uint) {
+	err := infraUser.UpdateUserAccessToken(userID, "123qwerty")
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func GetByEmail(infraUser user.UserInfrastructure, email string) {
+	user, err := infraUser.GetByEmail(email)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(user)
 }
 
 func addUser() user.User {
