@@ -5,7 +5,7 @@ import (
 	"edu/pkg/helper"
 )
 
-type UserService interface {
+type UserServiceInterface interface {
 	CreateUser(user User) error
 	Login(email string, password string) (string, error)
 	GetUserInfo(id uint) (UserInfo, error)
@@ -17,7 +17,7 @@ type userSercive struct {
 	jwtSecret string
 }
 
-func DefalutUserService(userInfrastructure UserInfrastructure, jwtSecret string) UserService {
+func DefalutUserService(userInfrastructure UserInfrastructure, jwtSecret string) UserServiceInterface {
 	return &userSercive{
 		infra:     userInfrastructure,
 		jwtSecret: jwtSecret,
