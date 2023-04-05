@@ -1,6 +1,7 @@
 package user
 
 import "edu/pkg/helper"
+import "edu/pkg/constraints"
 
 type UserService interface {
 	CreateUser(user User) error
@@ -91,11 +92,13 @@ func (u *userSercive) GetUserInfo(id uint) (User, error) {
 }
 
 func validateLoginCredentials(email string, password string) error {
-	if email == "" {
+	constraints := constraints.DefaultValidationStruct()
+
+	if constraints.IsBlank(email) {
 		return ErrEmialIsEmpty
 	}
 
-	if password == "" {
+	if constraints.IsBlank(password) {
 		return ErrPasswordIsEmpty
 	}
 	return nil
