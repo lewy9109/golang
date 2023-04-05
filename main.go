@@ -1,15 +1,13 @@
 package main
 
 import (
-	"edu/model/user"
-	"edu/seciurity"
+	"edu/pkg/helper"
+	"edu/pkg/user"
 	"fmt"
-
-	"log"
-
 	"github.com/golang-jwt/jwt/v5"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"log"
 )
 
 func main() {
@@ -54,8 +52,6 @@ func InsertUserToDB(infraUser user.UserInfrastructure) {
 	user := addUser()
 
 	err := infraUser.CreateUser(user)
-
-	// user, err := infraUser.GetByEmail("mail@glob.com")
 	if err != nil {
 		log.Fatal(err)
 	}
