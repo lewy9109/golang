@@ -15,6 +15,7 @@ var (
 	ErrInternalDBError          = errors.New("internal-db-error")
 	ErrInternalServer           = errors.New("internal-server-error")
 	ErrTokenCreate              = errors.New("token-create-error")
+	ErrUserEmailIsExist         = errors.New("email-exist-system")
 )
 
 type User struct {

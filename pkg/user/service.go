@@ -39,6 +39,10 @@ func (u *userSercive) CreateUser(user User) error {
 		return ErrPasswordIsEmpty
 	}
 
+	if u.checkIsEmailExist(user.Email) != nil {
+		return ErrUserEmailIsExist
+	}
+
 	hashedPassword, err := helper.HashPassword(user.Password)
 	if err != nil {
 		return err
@@ -100,6 +104,14 @@ func validateLoginCredentials(email string, password string) error {
 
 	if constraints.IsBlank(password) {
 		return ErrPasswordIsEmpty
+	}
+	return nil
+}
+
+func (u *userSercive) checkIsEmailExist(email string) error {
+	user, _ := u.infra.GetByEmail(email)
+	if user.Email == email {
+		return ErrUserEmailIsExist
 	}
 	return nil
 }
