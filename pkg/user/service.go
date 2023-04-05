@@ -110,7 +110,7 @@ func validateLoginCredentials(email string, password string) error {
 
 func (u *userSercive) checkIsEmailExist(email string) error {
 	user, _ := u.infra.GetByEmail(email)
-	if user.Email == email {
+	if user != nil && user.Email == email {
 		return ErrUserEmailIsExist
 	}
 	return nil
