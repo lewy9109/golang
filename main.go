@@ -21,11 +21,22 @@ func main() {
 		log.Fatal(err)
 	}
 
-	infraUser := user.DefaultUserInfraStructure(db)
-	InsertUserToDB(infraUser)
-	// UpdateUser(infraUser, uint(1))
-	// GetByEmail(infraUser, "mail@glob.com")
-	// TokenHelper()
+	userInfra := user.DefaultUserInfraStructure(db)
+	userServie := user.DefalutUserService(userInfra, "secretToken")
+
+	user, _ := userServie.GetUserInfo(2)
+
+	fmt.Println(user)
+
+	token, _ := userServie.Login("mail2@glob.com", "qwerty123")
+
+	fmt.Println(token)
+
+	// infraUser := user.DefaultUserInfraStructure(db)
+	// InsertUserToDB(infraUser)
+	// // UpdateUser(infraUser, uint(1))
+	// // GetByEmail(infraUser, "mail@glob.com")
+	// // TokenHelper()
 }
 
 func TokenHelper() {

@@ -38,7 +38,14 @@ func (u *userSercive) CreateUser(user User) error {
 		return ErrPasswordIsEmpty
 	}
 
-	err := u.infra.CreateUser(user)
+	hashedPassword, err := helper.HashPassword(user.Password)
+	if err != nil {
+		return err
+	}
+
+	user.Password = hashedPassword
+
+	err = u.infra.CreateUser(user)
 
 	if err != nil {
 		return ErrInternalDBError
