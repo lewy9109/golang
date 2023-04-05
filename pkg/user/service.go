@@ -1,6 +1,6 @@
 package user
 
-import "log"
+import "edu/pkg/helper"
 
 type UserService interface {
 	CreateUser(user User) error
@@ -9,12 +9,14 @@ type UserService interface {
 }
 
 type userSercive struct {
-	infra UserInfrastructure
+	infra     UserInfrastructure
+	jwtSecret string
 }
 
-func DefalutUserService(userInfrastructure UserInfrastructure) UserService {
+func DefalutUserService(userInfrastructure UserInfrastructure, jwtSecret string) UserService {
 	return &userSercive{
-		infra: userInfrastructure,
+		infra:     userInfrastructure,
+		jwtSecret: jwtSecret,
 	}
 }
 
@@ -46,7 +48,31 @@ func (u *userSercive) CreateUser(user User) error {
 }
 
 func (u *userSercive) Login(email string, password string) (string, error) {
-	return "", nil
+
+	if email == "" {
+		return "", ErrEmialIsEmpty
+	}
+
+	if password == "" {
+		return "", ErrPasswordIsEmpty
+	}
+
+	user, err := u.infra.GetByEmail(email)
+	if err != nil {
+		return "", ErrPasswordOrEmailIsInvalid
+	}
+
+	if !helper.ComaparePasswords(user.Password, password) {
+		return "", ErrPasswordOrEmailIsInvalid
+	}
+
+	token, err := helper.CreateJWTToken(user.ID, u.jwtSecret)
+
+	if err != nil {
+		return "", ErrTokenCreate
+	}
+
+	return token, nil
 }
 
 func (u *userSercive) GetUserInfo(id uint) (User, error) {
