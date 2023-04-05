@@ -49,12 +49,9 @@ func (u *userSercive) CreateUser(user User) error {
 
 func (u *userSercive) Login(email string, password string) (string, error) {
 
-	if email == "" {
-		return "", ErrEmialIsEmpty
-	}
-
-	if password == "" {
-		return "", ErrPasswordIsEmpty
+	err := validateLoginCredentials(email, password)
+	if err != nil {
+		return "", err
 	}
 
 	user, err := u.infra.GetByEmail(email)
@@ -76,5 +73,23 @@ func (u *userSercive) Login(email string, password string) (string, error) {
 }
 
 func (u *userSercive) GetUserInfo(id uint) (User, error) {
-	return User{}, nil
+	user, err := u.infra.FindUser(id)
+	if err != nil {
+		return User{}, ErrInternalServer
+
+	}
+	user.Password = ""
+
+	return *user, nil
+}
+
+func validateLoginCredentials(email string, password string) error {
+	if email == "" {
+		return ErrEmialIsEmpty
+	}
+
+	if password == "" {
+		return ErrPasswordIsEmpty
+	}
+	return nil
 }

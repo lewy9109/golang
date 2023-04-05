@@ -7,7 +7,7 @@ import (
 
 type UserInfrastructure interface {
 	CreateUser(user User) error
-	GetUser(id uint) (*User, error)
+	FindUser(id uint) (*User, error)
 	GetByEmail(email string) (*User, error)
 	GetByToken(accessToken string) (*User, error)
 	UpdateUserAccessToken(id uint, access_token string) error
@@ -36,7 +36,7 @@ func (u *userInfra) CreateUser(user User) error {
 	return nil
 }
 
-func (u *userInfra) GetUser(id uint) (*User, error) {
+func (u *userInfra) FindUser(id uint) (*User, error) {
 
 	user := User{}
 

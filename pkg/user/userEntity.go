@@ -13,6 +13,7 @@ var (
 	ErrPasswordIsEmpty          = errors.New("password-is-empty")
 	ErrPasswordOrEmailIsInvalid = errors.New("password-emial-is-invalid")
 	ErrInternalDBError          = errors.New("internal-db-error")
+	ErrInternalServer           = errors.New("internal-server-error")
 	ErrTokenCreate              = errors.New("token-create-error")
 )
 
