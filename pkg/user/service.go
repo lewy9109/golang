@@ -1,12 +1,15 @@
 package user
 
-import "edu/pkg/helper"
-import "edu/pkg/constraints"
+import (
+	"edu/pkg/constraints"
+	"edu/pkg/helper"
+)
 
 type UserService interface {
 	CreateUser(user User) error
 	Login(email string, password string) (string, error)
-	GetUserInfo(id uint) (User, error)
+	GetUserInfo(id uint) (UserInfo, error)
+	Authorize(accessToken string) (uint, error)
 }
 
 type userSercive struct {
@@ -81,18 +84,29 @@ func (u *userSercive) Login(email string, password string) (string, error) {
 		return "", ErrTokenCreate
 	}
 
+	err = u.infra.UpdateUserAccessToken(user.ID, token)
+	if err != nil {
+		return "", ErrInternalDBError
+	}
+
 	return token, nil
 }
 
-func (u *userSercive) GetUserInfo(id uint) (User, error) {
+func (u *userSercive) GetUserInfo(id uint) (UserInfo, error) {
 	user, err := u.infra.FindUser(id)
 	if err != nil {
-		return User{}, ErrInternalServer
+		return UserInfo{}, ErrInternalServer
 
 	}
 	user.Password = ""
 
-	return *user, nil
+	userInfo := UserInfo{
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+		Email:     user.Email,
+	}
+
+	return userInfo, nil
 }
 
 func validateLoginCredentials(email string, password string) error {
@@ -114,4 +128,17 @@ func (u *userSercive) checkIsEmailExist(email string) error {
 		return ErrUserEmailIsExist
 	}
 	return nil
+}
+func (u *userSercive) Authorize(accessToken string) (uint, error) {
+	_, err := helper.ValidateJWTToken(accessToken, u.jwtSecret)
+	if err != nil {
+		return 0, ErrUserUnAuthorized
+	}
+
+	user, err := u.infra.GetByToken(accessToken)
+	if err != nil {
+		return 0, ErrInternalDBError
+	}
+
+	return user.ID, nil
 }

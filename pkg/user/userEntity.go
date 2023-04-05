@@ -16,6 +16,7 @@ var (
 	ErrInternalServer           = errors.New("internal-server-error")
 	ErrTokenCreate              = errors.New("token-create-error")
 	ErrUserEmailIsExist         = errors.New("email-exist-system")
+	ErrUserUnAuthorized         = errors.New("user-unauthorized")
 )
 
 type User struct {
@@ -25,4 +26,10 @@ type User struct {
 	Email       string `gorm:"email"`
 	Password    string `gorm:"password"`
 	AccessToken string `gorm:"access_token"`
+}
+
+type UserInfo struct {
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	Email     string `json:"email"`
 }

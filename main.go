@@ -30,6 +30,10 @@ func main() {
 
 	token, _ := userServie.Login("mail2@glob.com", "qwerty123")
 
+	userID, _ := userServie.Authorize(token)
+
+	fmt.Println(userID)
+
 	fmt.Println(token)
 
 	// infraUser := user.DefaultUserInfraStructure(db)
