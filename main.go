@@ -4,10 +4,11 @@ import (
 	"edu/pkg/controller/userController"
 	"edu/pkg/user"
 	"fmt"
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"log"
 )
 
 func main() {
