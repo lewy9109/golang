@@ -1,7 +1,7 @@
 package main
 
 import (
-	"edu/pkg/controller/userController"
+	"edu/pkg/controller/rest/userController"
 	"edu/pkg/user"
 	"fmt"
 	"log"
