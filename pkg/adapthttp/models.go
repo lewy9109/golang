@@ -23,3 +23,7 @@ type GetUserResponse struct {
 	LastName string `json:"last_name"`
 	Email    string `json:"email"`
 }
+
+type ErrorOccuredModel struct {
+	Message string `json:"message"`
+}
