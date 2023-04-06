@@ -37,7 +37,12 @@ func main() {
 	}
 
 	server.POST("/users", userServer.CreateUser)
-	server.GET("/login", userServer.LoginUser)
+	server.POST("/login", userServer.LoginUser)
+
+	err = server.Run()
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	// user, _ := userServie.GetUserInfo(2)
 
