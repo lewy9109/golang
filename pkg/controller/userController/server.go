@@ -1,4 +1,4 @@
-package adapthttp
+package userController
 
 import (
 	userService "edu/pkg/user"

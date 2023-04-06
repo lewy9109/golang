@@ -1,4 +1,4 @@
-package adapthttp
+package userController
 
 type CreateUserRequest struct {
 	Name     string `json:"name"`

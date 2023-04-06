@@ -1,7 +1,7 @@
 package main
 
 import (
-	"edu/pkg/adapthttp"
+	"edu/pkg/controller/userController"
 	"edu/pkg/helper"
 	"edu/pkg/user"
 	"fmt"
@@ -27,7 +27,7 @@ func main() {
 	userInfra := user.DefaultUserInfraStructure(db)
 	userService := user.DefalutUserService(userInfra, "secretToken")
 
-	userServer := adapthttp.DefalutUserServer(userService)
+	userServer := userController.DefalutUserServer(userService)
 
 	server := gin.Default()
 
