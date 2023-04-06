@@ -1,4 +1,4 @@
-package http
+package adapthttp
 
 import (
 	userService "edu/pkg/user"
@@ -32,13 +32,19 @@ func (u *userServer) CreateUser(context *gin.Context) {
 		return
 	}
 
-	createUser := userService.User{}
+	createUser := userService.User{
+		Email:     "nowy@gmail.com",
+		FirstName: "Tomek",
+		LastName:  "Tomkowicz",
+		Password:  "qwerty123",
+	}
 
 	err = u.service.CreateUser(createUser)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, nil)
 		return
 	}
+
 	context.JSON(http.StatusOK, CreateUserResponse{})
 }
 func (u *userServer) LoginUser(context *gin.Context) {

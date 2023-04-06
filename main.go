@@ -36,11 +36,6 @@ func main() {
 
 	fmt.Println(token)
 
-	// infraUser := user.DefaultUserInfraStructure(db)
-	// InsertUserToDB(infraUser)
-	// // UpdateUser(infraUser, uint(1))
-	// // GetByEmail(infraUser, "mail@glob.com")
-	// // TokenHelper()
 }
 
 func TokenHelper() {

@@ -1,4 +1,4 @@
-package http
+package adapthttp
 
 type CreateUserRequest struct {
 	Name     string `json:"name"`
