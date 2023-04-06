@@ -22,3 +22,5 @@ require (
 	gorm.io/driver/sqlite v1.4.4 // indirect
 	gorm.io/gorm v1.24.6 // indirect
 )
+
+replace google.golang.org/grpc => github.com/grpc/grpc-go latest
