@@ -2,6 +2,7 @@ package adapthttp
 
 import (
 	userService "edu/pkg/user"
+	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -33,14 +34,18 @@ func (u *userServer) CreateUser(context *gin.Context) {
 	}
 
 	createUser := userService.User{
-		Email:     "nowy@gmail.com",
-		FirstName: "Tomek",
-		LastName:  "Tomkowicz",
-		Password:  "qwerty123",
+		Email:     user.Email,
+		FirstName: user.Name,
+		LastName:  user.LastName,
+		Password:  user.Password,
 	}
 
 	err = u.service.CreateUser(createUser)
 	if err != nil {
+		if errors.Is(err, userService.ErrInternalDBError) || errors.Is(err, userService.ErrInternalServer) {
+			context.JSON(http.StatusInternalServerError, nil)
+			return
+		}
 		context.JSON(http.StatusBadRequest, nil)
 		return
 	}

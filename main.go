@@ -1,13 +1,16 @@
 package main
 
 import (
+	"edu/pkg/adapthttp"
 	"edu/pkg/helper"
 	"edu/pkg/user"
 	"fmt"
+	"log"
+
+	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"log"
 )
 
 func main() {
@@ -22,19 +25,31 @@ func main() {
 	}
 
 	userInfra := user.DefaultUserInfraStructure(db)
-	userServie := user.DefalutUserService(userInfra, "secretToken")
+	userService := user.DefalutUserService(userInfra, "secretToken")
 
-	user, _ := userServie.GetUserInfo(2)
+	userServer := adapthttp.DefalutUserServer(userService)
 
-	fmt.Println(user)
+	server := gin.Default()
 
-	token, _ := userServie.Login("mail2@glob.com", "qwerty123")
+	group := server.Group("/user/", userServer.Authorize)
+	{
+		group.GET("/", userServer.GetInfo)
+	}
 
-	userID, _ := userServie.Authorize(token)
+	server.POST("/users", userServer.CreateUser)
+	server.GET("/login", userServer.LoginUser)
 
-	fmt.Println(userID)
+	// user, _ := userServie.GetUserInfo(2)
 
-	fmt.Println(token)
+	// fmt.Println(user)
+
+	// token, _ := userServie.Login("mail2@glob.com", "qwerty123")
+
+	// userID, _ := userServie.Authorize(token)
+
+	// fmt.Println(userID)
+
+	// fmt.Println(token)
 
 }
 
