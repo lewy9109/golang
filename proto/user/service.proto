@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package service;
+
+// import "google/protobuf/empty.proto";
+
+option go_package = "edu/pkg/controler/grpc";
+
+service UserService {
+    rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {};
+    rpc LoginUser (LoginUserResponse) returns (LoginUserResponse) {};
+    rpc GetUserInfo (GetUserInfoRequest) returns (GetUserInfoResponse) {};    
+}
+
+message CreateUserRequest {
+    
+    string email = 1;
+    string password = 2;
+    string name = 3;
+    string last_name = 4;
+}
+
+message CreateUserResponse{}
+
+message LoginUserRequest{
+    string email = 1;
+    string password = 2;
+}
+
+message LoginUserResponse {
+    string access_token = 1;
+}
+
+message GetUserInfoRequest {
+    string user_id = 1;
+}
+
+message GetUserInfoResponse {
+    string email = 1;
+    string name = 2;
+    string last_name = 3;
+}
