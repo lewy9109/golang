@@ -1,8 +1,8 @@
 package user
 
 import (
-	"edu/pkg/constraints"
-	"edu/pkg/helper"
+	"github.com/lewy9109/golang_login_jwt/pkg/constraints"
+	"github.com/lewy9109/golang_login_jwt/pkg/helper"
 )
 
 type UserServiceInterface interface {

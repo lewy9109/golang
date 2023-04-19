@@ -1,9 +1,9 @@
 package main
 
 import (
-	"edu/pkg/controller/userController"
-	"edu/pkg/user"
 	"fmt"
+	"github.com/lewy9109/golang_login_jwt/pkg/controller/userController"
+	"github.com/lewy9109/golang_login_jwt/pkg/user"
 	"log"
 
 	"github.com/gin-gonic/gin"

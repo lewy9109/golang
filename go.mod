@@ -1,4 +1,4 @@
-module edu
+module github.com/lewy9109/golang_login_jwt
 
 go 1.13
 

@@ -1,8 +1,8 @@
 package userController
 
 import (
-	userService "edu/pkg/user"
 	"errors"
+	userService "github.com/lewy9109/golang_login_jwt/pkg/user"
 	"net/http"
 	"strconv"
 
